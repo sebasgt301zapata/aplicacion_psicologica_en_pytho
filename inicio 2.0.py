@@ -1,5 +1,12 @@
 import datetime
 
+# Diccionario con preguntas y respuestas
+preguntas_respuestas = {
+    "¿Qué es el clima?": "El clima se refiere a las condiciones atmosféricas promedio en un lugar determinado.",
+    "¿Qué es la inteligencia artificial?": "La inteligencia artificial es un campo de la informática que se enfoca en crear sistemas capaces de realizar tareas que requieren inteligencia humana.",
+    "¿Qué es el aprendizaje automático?": "El aprendizaje automático es un subcampo de la inteligencia artificial que se enfoca en crear algoritmos que pueden aprender de los datos.",
+}
+
 def saludo(nombre):
     hora = datetime.datetime.now().hour
     if hora < 12:
@@ -17,6 +24,12 @@ def respuesta_estado(estado):
     else:
         return "Gracias por compartir cómo te sientes."
 
+def respuesta_pregunta(pregunta):
+    if pregunta in preguntas_respuestas:
+        return preguntas_respuestas[pregunta]
+    else:
+        return "Lo siento, pero no tengo una respuesta específica para eso."
+
 def conversacion():
     nombre = input("¿Cuál es tu nombre? ")
     if not nombre:
@@ -26,8 +39,8 @@ def conversacion():
     while True:
         estado = input("¿Cómo estás? ")
         print(respuesta_estado(estado))
-        accion = input("¿Quieres hablar sobre algo en particular? (sí/no): ")
-        if accion.lower() == "sí":
+        accion = input("¿Quieres hablar sobre algo en particular o hacer una pregunta? (hablar/pregunta): ")
+        if accion.lower() == "hablar":
             tema = input("¿Qué te gustaría hablar sobre? ")
             print(f"¡Genial! Hablemos sobre {tema}.")
             while True:
@@ -36,30 +49,14 @@ def conversacion():
                 seguir = input("(sí/no): ")
                 if seguir.lower() != "sí":
                     break
-                else:
-                    print("¿Quieres agregar algo más sobre este tema?")
-                    agregar = input("(si/no): ")
-                    if agregar.lower() == "si":
-                        comentario_adicional = input("¿Qué más quieres agregar? ")
-                        print("¡Gracias por compartir!")
+        elif accion.lower() == "pregunta":
+            pregunta = input("¿Qué quieres saber? ")
+            print(respuesta_pregunta(pregunta))
         else:
-            print("¿Quieres saber algo en particular?")
-            saber = input("(si/no): ")
-            if saber.lower() == "si":
-                pregunta = input("¿Qué quieres saber? ")
-                print("¡Interesante pregunta! ¿Quieres que te dé una respuesta?")
-                respuesta = input("(si/no): ")
-                if respuesta.lower() == "si":
-                    print("Lo siento, pero no tengo una respuesta específica para eso.")
-                    print("¿Quieres intentar algo más?")
-                else:
-                    print("¡Hasta luego!")
-                    break
-            else:
-                print("¡Hasta luego!")
-                break
-        continuar = input("¿Quieres seguir conversando? (si/no): ")
-        if continuar.lower() != "si":
+            print("¡Hasta luego!")
+            break
+        continuar = input("¿Quieres seguir conversando? (sí/no): ")
+        if continuar.lower() != "sí":
             break
 
 conversacion()
